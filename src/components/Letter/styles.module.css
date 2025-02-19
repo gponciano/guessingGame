@@ -1,38 +1,39 @@
-.letter {
+.container {
     width: 3.37rem;
-    height: 3.37;
+    height: 3.37rem;
     border-radius: 0.62rem;
-
-    background-color: #EBEBFC;
+  
+    background-color: #ebebfc;
     color: #6363db;
-
+  
     text-transform: uppercase;
+  
     font-size: 2rem;
     font-weight: bold;
-
+  
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.letterSmall {
+  }
+  
+  .small {
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 0.43rem;
-
+  
     font-size: 1.25rem;
     font-weight: 500;
     border: 1px solid #6363db;
-}
-
-.letterCorrect {
+  }
+  
+  .correct {
     background-color: #e1f5ec;
-    border-color: #03ab4f; 
+    border-color: #03ab4f;
     color: #03ab4f;
-}
-
-.letterWrong {
+  }
+  
+  .wrong {
     background-color: #ffcf62;
-    border-color: #691b0a; 
-    color: #03ab4f;
-}
+    border-color: #691b0a;
+    color: #691b0a;
+  }

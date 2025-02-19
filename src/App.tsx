@@ -1,45 +1,109 @@
+import styles from './App.module.css';
+import './global.css'
 import { Header } from "./components/Header";
 import { Tip } from "./components/Tip";
 import { Letter } from "./components/Letter";
 import { Input } from "./components/Input";
 import { Button } from "./components/Button";
-import { LettersUsed } from "./components/LettersUsed";
+import { LettersUsed, LettersUsedProps } from "./components/LettersUsed";
 
-import './global.css';
-import styles from './App.module.css';
-import { useState } from "react";
+import { WORDS, Challenge } from './utils/words';
+import { useEffect, useState } from "react";
 
 
 
 export function App(){
-  
-  const [attempt, setAttempt] = useState(0);
-  const handleRestartGame = () =>{  
-      setAttempt(0);
+
+  const [challenge, setChallenge ] = useState<Challenge | null>(null)
+  const [ letter, setLetter ] = useState('')
+  const [ score, setScore] = useState(0)
+  const [ lettersUsed, setLettersUsed ] = useState<LettersUsedProps[]>([])
+
+ 
+ function handleRestartGame(){  
+    alert('Hello')
   }
+
+  function startGame(){
+    const index = Math.floor(Math.random() * WORDS.length)
+    const randomWord = WORDS[index]
+    
+    setChallenge(randomWord);
+    setScore(0)
+    setLetter('')
+    setLettersUsed([])
+  }
+
+
+
+function handleConfirm(){
+      if(!challenge){
+        return
+      }
+
+      if(!letter.trim()) {
+        return alert('Type a letter')
+      }
+
+      const value = letter.toUpperCase()
+      const exists = lettersUsed.find((used) => used.value.toUpperCase() === value)
+
+      if(exists){
+        return alert(`Letter ${value} has been used already`)
+      }
+
+      const hints = challenge.word
+      .toUpperCase()
+      .split("")
+      .filter((char) => char === value).length
+
+      const correct = hints > 0
+      const currentScore = score + hints
+
+      setLettersUsed((prevState) => [...prevState, {value, correct}])
+      setScore(currentScore)
+      setLetter('')
+  }
+
+
+
+  useEffect(() => {
+    startGame()
+  }, [])
+
+  if(!challenge){
+    return
+  }
+
   return (
     <div className={styles.container}>
       <main>
-        <Header current={attempt} max={10} onRestart={handleRestartGame}/>
+        <Header current={score} max={10} onRestart={handleRestartGame}/>
 
-        <Tip tip={'Library to create components and interfaces'}/>
+        <Tip tip={challenge.tip}/>
 
         <div className={styles.word}>
-        <Letter value='R'></Letter>
-        <Letter value='R'></Letter>
-        <Letter value='R'></Letter>
-        <Letter value='R'></Letter>
-        <Letter value='R'></Letter>
+          {
+            challenge.word.split("").map((letter, index) => {
+              const letterUsed = lettersUsed.find((used) => used.value.toUpperCase() === letter.toUpperCase()
+            )
+              return <Letter key={index} value={letterUsed?.value} color={letterUsed?.correct ? 'correct' : 'default'}/>
+            })}
         </div>
 
         <h4>Guess</h4>
 
         <div className={styles.guess}>
-          <Input autoFocus maxLength={1} placeholder='?'/>
-          <Button title='Confirm'/>
+          <Input 
+          autoFocus 
+          maxLength={1} 
+          placeholder='?' 
+          value={letter}
+          onChange={(e) => setLetter(e.target.value)}/>
+          <Button title='Confirm' onClick={handleConfirm}/>
         </div>
 
-        <LettersUsed />
+        <LettersUsed data={lettersUsed}/>
       </main>
     </div>
   )

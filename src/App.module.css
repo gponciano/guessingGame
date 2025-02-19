@@ -17,13 +17,15 @@
     padding-bottom: 4.5rem;
     border-radius: 0.75rem;
 }
-.container .word {
+.word {
     width: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
+
     margin: 2.5rem 0;
+    
 }
 
 .guess {

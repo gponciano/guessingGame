@@ -3,8 +3,8 @@ export type Challenge = {
     word: string
     tip: string
   }
-
-export const WORDS: Challenge[] = [
+  
+  export const WORDS: Challenge[] = [
     { id: 1, word: "CSS", tip: "Styling language" },
     { id: 2, word: "REACT", tip: "Library for building web interfaces" },
     { id: 3, word: "HTML", tip: "Markup language" },
@@ -16,4 +16,3 @@ export const WORDS: Challenge[] = [
     { id: 9, word: "Ruby", tip: "Dynamic language known for its ease of use and Ruby on Rails framework" },
     { id: 10, word: "Go", tip: "Fast and efficient language developed by Google" }
 ];
-
