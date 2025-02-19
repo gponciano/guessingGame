@@ -3,6 +3,7 @@ import { Tip } from "./components/Tip";
 import { Letter } from "./components/Letter";
 import { Input } from "./components/Input";
 import { Button } from "./components/Button";
+import { LettersUsed } from "./components/LettersUsed";
 
 import './global.css';
 import styles from './App.module.css';
@@ -37,6 +38,8 @@ export function App(){
           <Input autoFocus maxLength={1} placeholder='?'/>
           <Button title='Confirm'/>
         </div>
+
+        <LettersUsed />
       </main>
     </div>
   )

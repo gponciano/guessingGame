@@ -2,9 +2,16 @@
 
  type Props = {
     value?: string
+    size?: 'default' | 'small'
+    color?: 'default' | 'correct' | 'wrong'
  }
- export function Letter({value = ''}: Props){
-    return <div className={styles.letter}>
+ export function Letter({value = '', size = 'default', color = 'correct'}: Props){
+    return <div className={`
+    ${styles.letter}
+    ${size === 'small' && styles.letterSmall}
+    ${color === 'correct' && styles.letterCorrect}
+    ${color === 'wrong' && styles.letterWrong}
+    `}>
         <span>{value}</span>
     </div>
  }
