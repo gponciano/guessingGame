@@ -20,14 +20,14 @@ export function App(){
   const [ lettersUsed, setLettersUsed ] = useState<LettersUsedProps[]>([])
 
  
- function handleRestartGame(){  
+function handleRestartGame(){  
   const isConfirmed = window.confirm("Game will be reset, do you confirm?")
   if(isConfirmed){
     startGame()
   }
   }
 
-  function startGame(){
+function startGame(){
     const index = Math.floor(Math.random() * WORDS.length)
     const randomWord = WORDS[index]
     
