@@ -10,7 +10,7 @@ import { LettersUsed, LettersUsedProps } from "./components/LettersUsed";
 import { WORDS, Challenge } from './utils/words';
 import { useEffect, useState } from "react";
 
-
+const ATTEMPT_MARGIN = 5;
 
 export function App(){
 
@@ -21,7 +21,10 @@ export function App(){
 
  
  function handleRestartGame(){  
-    alert('Hello')
+  const isConfirmed = window.confirm("Game will be reset, do you confirm?")
+  if(isConfirmed){
+    startGame()
+  }
   }
 
   function startGame(){
@@ -49,6 +52,7 @@ function handleConfirm(){
       const exists = lettersUsed.find((used) => used.value.toUpperCase() === value)
 
       if(exists){
+        setLetter('')
         return alert(`Letter ${value} has been used already`)
       }
 
@@ -65,11 +69,30 @@ function handleConfirm(){
       setLetter('')
   }
 
+  function endGame(message: string){
+    alert(message)
+  }
 
 
   useEffect(() => {
     startGame()
   }, [])
+
+  useEffect(() => {
+    if(!challenge){
+      return 
+    }
+
+    setTimeout(() => {
+      if(score === challenge.word.length){
+        return endGame("Congratulations, you found the word")
+      }
+      const attemptLimit = challenge.word.length + ATTEMPT_MARGIN;
+      if(lettersUsed.length === attemptLimit){
+        return endGame("You have exhausted all your attempts, try again!")
+      }
+    }, 200)
+  },[score, lettersUsed.length])
 
   if(!challenge){
     return
@@ -78,7 +101,10 @@ function handleConfirm(){
   return (
     <div className={styles.container}>
       <main>
-        <Header current={score} max={10} onRestart={handleRestartGame}/>
+        <Header 
+        current={lettersUsed.length} 
+        max={challenge.word.length + ATTEMPT_MARGIN} 
+        onRestart={handleRestartGame}/>
 
         <Tip tip={challenge.tip}/>
 
